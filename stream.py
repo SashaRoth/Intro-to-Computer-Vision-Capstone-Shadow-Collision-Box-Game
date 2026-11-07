@@ -1,9 +1,4 @@
-"""
-1. Capture frames --> pass frame as single image
-2. Edge detect image
-3. Use edge detected image to set bounding box on video game side
-4. Video game backend, wasd platformer
-"""
+# Opens a video stream, exit with Q key -- not in use yet
 
 import cv2
 import numpy as np
