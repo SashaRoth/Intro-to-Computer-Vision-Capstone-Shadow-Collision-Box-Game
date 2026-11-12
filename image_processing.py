@@ -34,3 +34,20 @@ def keep_largest_contour(mask):
     out = np.zeros(mask.shape, np.uint8)
     cv2.drawContours(out, [cont], -1, 255, cv2.FILLED)
     return np.bitwise_and(mask, out)
+
+def background_div(mask, kernel_size=51):
+    """Comment"""
+    background = cv2.GaussianBlur(mask, (kernel_size,kernel_size), 0)
+    img_f= mask.astype(np.float32)
+    bg_f = background.astype(np.float32) + 1.0
+    result = img_f/bg_f
+    result = cv2.normalize(result, None, 0, 255, cv2.NORM_MINMAX)
+    return result.astype(np.uint8)
+
+def hole_removal(mask, open_size=5, close_size=3):
+    close_kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (close_size, close_size))
+    open_kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (open_size,open_size))
+
+    closed = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, close_kernel)
+    cleaned = cv2.morphologyEx(closed, cv2.MORPH_OPEN, open_kernel)
+    return cleaned
