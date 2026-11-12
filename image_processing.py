@@ -6,7 +6,7 @@ import numpy as np
 import shapes
 
 def otsu_threshold(img):
-    """Otsu's threshold from its definition. Returns an int; pixels > t are class 1."""
+    """Otsu's threshold from its definition. Returns int."""
     #  1. normalised histogram p over 256 levels      (np.bincount, minlength=256)
     hist = np.bincount(img.flat, minlength=256)
     norm = hist / np.sum(hist)
@@ -22,14 +22,15 @@ def otsu_threshold(img):
     return int(np.argmax(sigma2))
 
 def clean_mask(mask, open=2, close=2):
-    """Open with disk(r_open), then close with disk(r_close). Returns bool."""
+    """Open with disk(r_open), then close with disk(r_close). Returns binary mask."""
     opened = cv2.morphologyEx(mask.astype(np.uint8), cv2.MORPH_OPEN, shapes.rectangle(open, open/2))
     closed = cv2.morphologyEx(opened, cv2.MORPH_CLOSE, shapes.rectangle(close, close/2))
     return closed.astype(bool)
 
-def count_objects(mask, connectivity=2):
-    """Number of connected components (1 = 4-connected, 2 = 8-connected)."""
-    num_labels, _ = cv2.connectedComponents(
-        mask.astype(np.uint8), connectivity=connectivity * 4
-    )
-    return num_labels - 1
+def keep_largest_contour(mask):
+    """Keep only the largest contour in a binary mask. Returns binary mask"""
+    contours, hierarchy = cv2.findContours(mask.astype(np.uint8), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    cont = max(contours, key=cv2.contourArea)
+    out = np.zeros(mask.shape, np.uint8)
+    cv2.drawContours(out, [cont], -1, 255, cv2.FILLED)
+    return np.bitwise_and(mask, out)

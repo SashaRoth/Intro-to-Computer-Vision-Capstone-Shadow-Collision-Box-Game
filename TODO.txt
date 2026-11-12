@@ -4,14 +4,14 @@ This is where we keep track of our to-dos!
 fine-tune it later, we just need a pipeline to test first. 
 These are additional things we should implement (not necessarily in this order):
 
-    --> Remove small FOREGROUND elements by only keeping the object with the greatest area, aka connected component labeling.
+    Sasha --> Remove small FOREGROUND elements by only keeping the object with the greatest area, aka connected component labeling.
 The biggest object is the foreground that we want, so keep it.
-    --> Add a step that completely removes all HOLES (not necessarily dialation, I'm sure there's a cv2
+    Sage --> Add a step that completely removes all HOLES (not necessarily dialation, I'm sure there's a cv2
 library that does this). Having thin lines and holes in the object will yield unpredictable results, 
 and we can really only measure "distance between edges" if we have ONE edge. So fill the holes.
-    --> Trace the final result with polygon lines. There's a CV2 library for that. It's better for the platformer, and it will match our CVAT
+    Sasha --> Trace the final result with polygon lines. There's a CV2 library for that. It's better for the platformer, and it will match our CVAT
 results better, since I'm making the CVAT traces with polylines.
-    --> Add background division to get rid of wall shadows; not sure how this works, but Dallal seems to 
+    Sage --> Add background division to get rid of wall shadows; not sure how this works, but Dallal seems to 
 really recommend it.
 
 2. Finish making all of the CVAT references. This is my (sashas) job, it's just tedious.
