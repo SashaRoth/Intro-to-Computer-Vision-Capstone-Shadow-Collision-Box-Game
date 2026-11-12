@@ -2,37 +2,17 @@
 
 import matplotlib.pyplot as plt
 
-def images(img, img_gray, img_thresh, img_cont, img_filled, img_poly):
-    plt.figure(figsize=(16, 4))
+def images(imgs, titles):
 
-    plt.subplot(2, 3, 1)
-    plt.imshow(img, cmap='gray')
-    plt.axis('off')
-    plt.title('Original')
+    num = len(imgs)
 
-    plt.subplot(2, 3, 2)
-    plt.imshow(img_gray, cmap='gray')
-    plt.axis('off')
-    plt.title('Processed')
+    plt.figure(figsize=(4*num, 4))
 
-    plt.subplot(2, 3, 3)
-    plt.imshow(img_thresh, cmap='gray')
-    plt.axis('off')
-    plt.title('Thresholded')
+    for i in range(num):
+        plt.subplot(1, num, i+1)
+        plt.imshow(imgs[i], cmap='gray')
+        plt.axis('off')
+        plt.title(titles[i])
 
-    plt.subplot(2, 3, 4)
-    plt.imshow(img_cont, cmap='gray')
-    plt.axis('off')
-    plt.title('Largest Contour')
-
-    plt.subplot(2, 3, 5)
-    plt.imshow(img_filled, cmap='gray')
-    plt.axis('off')
-    plt.title('Filled')
-
-    plt.subplot(2, 3, 6)
-    plt.imshow(img_poly, cmap='gray')
-    plt.axis('off')
-    plt.title('Polylines')
-
+    plt.tight_layout()
     plt.show()

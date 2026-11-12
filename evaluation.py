@@ -1,42 +1,40 @@
 # Module for all of our test functions, which returns quantitative metrics for the pipeline.py processing steps
 from math import dist
+#from unittest import result
 
 import numpy as np
 import cv2
 from scipy import ndimage as ndi
 import matplotlib.pyplot as plt
 
+import display_results as disp
+
 
 def mean_edge_distance(result, benchmark):
     """Compute the mean edge distance between two contours."""
-    intersection = abs(result.astype(np.int32) - benchmark.astype(np.int32))
-    mask, distances = ndi.distance_transform_edt(intersection, sampling=None, return_distances=True, return_indices=False, distances=None, indices=None) # as used in activity_07 task 3.2
+    result_mask = np.asarray(result) != 0
+    benchmark_mask = np.asarray(benchmark) != 0
+    diff  = np.abs(result_mask.astype(int) - benchmark_mask.astype(int))
 
-    plt.figure(figsize=(4, 4))
+    result_edge = result_mask & ~ndi.binary_erosion(result_mask)
+    benchmark_edge = benchmark_mask & ~ndi.binary_erosion(benchmark_mask)
 
-    plt.subplot(1, 4, 1)
-    plt.imshow(result, cmap='gray')
-    plt.axis('off')
-    plt.title('result')
+    to_benchmark = ndi.distance_transform_edt(~benchmark_edge)
+    to_result = ndi.distance_transform_edt(~result_edge)
 
-    plt.subplot(1, 4, 2)
-    plt.imshow(benchmark, cmap='gray')
-    plt.axis('off')
-    plt.title('benchmark')
+    kernel = np.ones((6, 6), dtype=np.int8)
+    superimposed = cv2.dilate(result_edge.astype(np.uint8), kernel) | cv2.dilate(benchmark_edge.astype(np.uint8), kernel)
 
-    plt.subplot(1, 4, 3)
-    plt.imshow(intersection, cmap='gray')
-    plt.axis('off')
-    plt.title('intersection')
+    edge_distances = np.concatenate((
+        to_benchmark[result_edge],
+        to_result[benchmark_edge],
+    ))
+    mean_distance = edge_distances.mean()
 
-    plt.subplot(1, 4, 4)
-    plt.imshow(distances, cmap='gray')
-    plt.axis('off')
-    plt.title('distances')
+    disp.images([result, benchmark, diff, superimposed],
+                ['Result', 'Benchmark', 'Difference', 'Superimposed, mean distance: {:.2f}'.format(mean_distance)])
     
-    plt.show()
-    
-    return None
+    return mean_distance
 
 def IoU(result, benchmark):
     """Compute the Intersection over Union (IoU) between two binary masks."""

@@ -55,7 +55,11 @@ img_filled = img_cont
 img_poly = img_filled
 
 # Display each step of the pipeline
-#disp.images(img, img_gray, img_thresh, img_cont, img_filled, img_poly)
+disp.images([img, img_gray, img_thresh, img_cont, img_filled, img_poly],
+            ['Original', 'Grayscale', 'Thresholded', 'Contour', 'Filled', 'Polyline'])
 
-eval.mean_edge_distance(img_poly, benchmark)
-#print(f"Mean edge distance between processed image and benchmark: {mean_dist:.2f} pixels")
+mean_dist = eval.mean_edge_distance(img_poly, benchmark)
+IoU_score = eval.IoU(img_poly, benchmark)
+
+print(f"Mean edge distance: {mean_dist:.2f}")
+print(f"Intersection over Union: {IoU_score:.2f}")

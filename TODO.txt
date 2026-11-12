@@ -4,8 +4,6 @@ This is where we keep track of our to-dos!
 fine-tune it later, we just need a pipeline to test first. 
 These are additional things we should implement (not necessarily in this order):
 
-    Sasha --> Remove small FOREGROUND elements by only keeping the object with the greatest area, aka connected component labeling.
-The biggest object is the foreground that we want, so keep it.
     Sage --> Add a step that completely removes all HOLES (not necessarily dialation, I'm sure there's a cv2
 library that does this). Having thin lines and holes in the object will yield unpredictable results, 
 and we can really only measure "distance between edges" if we have ONE edge. So fill the holes.
@@ -16,16 +14,7 @@ really recommend it.
 
 2. Finish making all of the CVAT references. This is my (sashas) job, it's just tedious.
 
-3. Implement test.py to calculate the average edge distance between the pipeline.py image and the 
-CVAT reference. I don't feel like explaining the whole process, so in Dallal's words:
-
-"Define the boundary metric precisely. A good version: for every boundary pixel of your mask, take 
-the distance to the nearest ground-truth boundary pixel (cv2.distanceTransform on the inverted 
-ground-truth boundary gives this in one function call), do the same in the other direction, and average 
-the two. Report IoU alongside it as a sanity check, since a mask can have a small average boundary error 
-and still miss a chunk of the shadow."
-
-4. Add functions to display_results that makes nice graphics and a written report. We already have the function that
+3. Add functions to display_results that makes nice graphics and a written report. We already have the function that
 plots our original, processed, and OTSU'd image; we can refine that, and add another function that generates the edge distance report,
 which will be provided by test.py -- this should include info like original image resolution and file format, per Dallal's request. 
 display_results is for DISPLAYING results, NOT for calculating results. That's test.py's job.
