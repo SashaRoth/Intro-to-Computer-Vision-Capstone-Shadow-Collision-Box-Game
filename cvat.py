@@ -9,22 +9,21 @@ import xml.etree.ElementTree as ET
 
 # Argument: filename (without extension) of the CVAT XML file to load (e.g. "shadow2" for "shadow2.xml")
 def load_image(filename):
-    outdir = os.path.join("cvat_masks", f"{name}_mask.png")
+    outdir = os.path.join("cvat_masks", f"{filename}_mask.png")
     if os.path.isfile(outdir):
         print("Benchmark image already exists")
-        return cv2.imread(out, cv2.IMREAD_UNCHANGED)
+        return cv2.imread(outdir, cv2.IMREAD_UNCHANGED)
     else:
-        cv2.imwrite(out, mask)
-        print("Benchmark image saved", out)
-
-    xml_path = os.path.join("xml", f"{filename}.xml")
-    root = ET.parse(xml_path).getroot()
-    for image in root.iter("image"):
-        name = os.path.splitext(image.get("name"))[0]
-        h, w = int(image.get("height")), int(image.get("width"))
-        mask = np.zeros((h, w), np.uint8)
-        for poly in image.iter("polygon"):
-            pts = [tuple(map(float, p.split(","))) for p in poly.get("points").split(";")]
-            cv2.fillPoly(mask, [np.round(pts).astype(np.int32)], 255)
-        
+        print("Benchmark image does not exist, generating...")
+        xml_path = os.path.join("xml", f"{filename}.xml")
+        root = ET.parse(xml_path).getroot()
+        for image in root.iter("image"):
+            name = os.path.splitext(image.get("name"))[0]
+            h, w = int(image.get("height")), int(image.get("width"))
+            mask = np.zeros((h, w), np.uint8)
+            for poly in image.iter("polygon"):
+                pts = [tuple(map(float, p.split(","))) for p in poly.get("points").split(";")]
+                cv2.fillPoly(mask, [np.round(pts).astype(np.int32)], 255)
+            cv2.imwrite(outdir, mask)
+            return mask
         
