@@ -10,6 +10,7 @@ import cvat
 import shapes
 import image_processing as ip
 import display_results as disp
+import evaluation as eval
 
 # parameters
 sigma = 10.0
@@ -25,7 +26,7 @@ filename = sys.argv[1] if len(sys.argv) > 1 else "testshadow"
 
 # Read image
 img = cv2.imread(f"images/{filename}.png", cv2.IMREAD_UNCHANGED)
-benchmark = cvat.CVATBenchmark(f"images/{filename}.xml")
+benchmark = cvat.load_image(filename)
 
 # Check the result
 print(type(img))        # <class 'numpy.ndarray'>
@@ -54,6 +55,7 @@ img_filled = img_cont
 img_poly = img_filled
 
 # Display each step of the pipeline
-disp.images(img, img_gray, img_thresh, img_cont, img_filled, img_poly)
+#disp.images(img, img_gray, img_thresh, img_cont, img_filled, img_poly)
 
-mean_dist = ip.mean_edge_distance(img_cont, img_poly)
+eval.mean_edge_distance(img_poly, benchmark)
+#print(f"Mean edge distance between processed image and benchmark: {mean_dist:.2f} pixels")
