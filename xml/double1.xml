@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<annotations>
+  <version>1.1</version>
+  <meta>
+    <job>
+      <id>4725495</id>
+      <size>9</size>
+      <mode>annotation</mode>
+      <overlap>0</overlap>
+      <bugtracker></bugtracker>
+      <created>2026-11-13 01:33:23.944684+00:00</created>
+      <updated>2026-11-18 02:42:48.577625+00:00</updated>
+      <subset>default</subset>
+      <start_frame>0</start_frame>
+      <stop_frame>8</stop_frame>
+      <frame_filter></frame_filter>
+      <segments>
+        <segment>
+          <id>4722274</id>
+          <start>0</start>
+          <stop>8</stop>
+          <url>https://app.cvat.ai/api/jobs/4725495/dataset/export/api/jobs/4725495</url>
+        </segment>
+      </segments>
+      <owner>
+        <username>sasha_roth</username>
+        <email>asr195@pitt.edu</email>
+      </owner>
+      <assignee></assignee>
+      <labels>
+        <label>
+          <name>foreground</name>
+          <color>#ffffff</color>
+          <type>polygon</type>
+          <attributes>
+          </attributes>
+        </label>
+      </labels>
+    </job>
+    <dumped>2026-11-18 02:43:21.825109+00:00</dumped>
+  </meta>
+  <image id="0" name="double1.jpg" width="4080" height="3060">
+    <polygon label="foreground" source="manual" occluded="0" points="-0.00,2507.64;91.67,2698.61;1249.88,2700.54;1187.12,2621.52;1186.35,2495.24;1201.84,2450.70;1262.27,2421.26;1311.47,2367.03;1448.98,2336.04;1503.21,2333.71;1631.43,2352.69;1692.63,2421.26;1729.43,2484.78;1719.74,2599.44;1716.26,2674.20;1716.26,2688.54;1822.40,2683.89;1859.97,2681.56;1838.28,2485.95;1833.24,2390.65;1868.10,2384.84;1875.46,2368.96;1803.03,2208.59;1741.82,1670.55;1840.60,1598.50;1773.20,1401.33;1813.49,1369.96;2145.46,1343.23;2198.91,1374.61;2212.47,1500.11;2185.74,1540.40;2217.12,1607.80;2288.78,1634.53;2306.60,2037.77;2320.16,2333.71;2362.76,2363.15;2386.39,2676.91;2478.20,2676.91;2738.51,2348.43;3076.28,2676.14;4080.00,2635.82;4080.00,3060.00;-0.00,3060.00" z_order="0">
+    </polygon>
+  </image>
+</annotations>

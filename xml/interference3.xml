@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<annotations>
+  <version>1.1</version>
+  <meta>
+    <job>
+      <id>4725495</id>
+      <size>9</size>
+      <mode>annotation</mode>
+      <overlap>0</overlap>
+      <bugtracker></bugtracker>
+      <created>2026-11-13 01:33:23.944684+00:00</created>
+      <updated>2026-11-18 02:42:48.577625+00:00</updated>
+      <subset>default</subset>
+      <start_frame>0</start_frame>
+      <stop_frame>8</stop_frame>
+      <frame_filter></frame_filter>
+      <segments>
+        <segment>
+          <id>4722274</id>
+          <start>0</start>
+          <stop>8</stop>
+          <url>https://app.cvat.ai/api/jobs/4725495/dataset/export/api/jobs/4725495</url>
+        </segment>
+      </segments>
+      <owner>
+        <username>sasha_roth</username>
+        <email>asr195@pitt.edu</email>
+      </owner>
+      <assignee></assignee>
+      <labels>
+        <label>
+          <name>foreground</name>
+          <color>#ffffff</color>
+          <type>polygon</type>
+          <attributes>
+          </attributes>
+        </label>
+      </labels>
+    </job>
+    <dumped>2026-11-18 02:43:21.825109+00:00</dumped>
+  </meta>
+  <image id="0" name="interference3.jpg" width="4080" height="3060">
+    <polygon label="foreground" source="manual" occluded="0" points="0.00,1902.14;1628.17,1886.67;1624.00,1356.90;2195.46,1331.62;2137.61,1884.98;3487.06,1873.64;3556.77,1856.70;3872.07,1855.66;3883.41,1830.77;4080.00,1823.23;4080.00,3060.00;0.00,3060.00" z_order="0">
+    </polygon>
+  </image>
+</annotations>

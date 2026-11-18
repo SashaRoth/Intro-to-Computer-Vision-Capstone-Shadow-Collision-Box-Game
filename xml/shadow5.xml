@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<annotations>
+  <version>1.1</version>
+  <meta>
+    <job>
+      <id>4725495</id>
+      <size>9</size>
+      <mode>annotation</mode>
+      <overlap>0</overlap>
+      <bugtracker></bugtracker>
+      <created>2026-11-13 01:33:23.944684+00:00</created>
+      <updated>2026-11-18 02:42:48.577625+00:00</updated>
+      <subset>default</subset>
+      <start_frame>0</start_frame>
+      <stop_frame>8</stop_frame>
+      <frame_filter></frame_filter>
+      <segments>
+        <segment>
+          <id>4722274</id>
+          <start>0</start>
+          <stop>8</stop>
+          <url>https://app.cvat.ai/api/jobs/4725495/dataset/export/api/jobs/4725495</url>
+        </segment>
+      </segments>
+      <owner>
+        <username>sasha_roth</username>
+        <email>asr195@pitt.edu</email>
+      </owner>
+      <assignee></assignee>
+      <labels>
+        <label>
+          <name>foreground</name>
+          <color>#ffffff</color>
+          <type>polygon</type>
+          <attributes>
+          </attributes>
+        </label>
+      </labels>
+    </job>
+    <dumped>2026-11-18 02:43:21.825109+00:00</dumped>
+  </meta>
+  <image id="0" name="shadow5.jpg" width="3060" height="4080">
+    <polygon label="foreground" source="manual" occluded="0" points="0.00,2721.97;929.02,2814.82;926.11,1470.00;956.32,1394.52;1009.16,1359.64;968.99,1187.83;994.73,1147.65;1314.79,1134.78;1361.41,1184.61;1314.79,1347.08;1396.81,1421.00;1398.57,2216.64;1452.76,2296.99;1437.82,2646.74;1451.10,2858.52;3060.00,2994.24;3060.00,4080.00;-0.00,4080.00" z_order="0">
+    </polygon>
+  </image>
+</annotations>

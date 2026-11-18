@@ -1,4 +1,5 @@
 # standard imports
+import os
 import sys
 import cv2
 import numpy as np
@@ -16,16 +17,27 @@ import evaluation as eval
 sigma = 10.0
 blur_size = (int(sigma*6+1), int(sigma*6+1))
 structure_element_size = 100
-Clahe_Cliplimit = 2.0
-Clahe_Size = 30
 open_intensity = 70
 close_intensity = 200
 
-# parse arguments -- the only argument is the filename of the image to process, without extension (e.g. "testshadow" for "testshadow.png")
-filename = sys.argv[1] if len(sys.argv) > 1 else "testshadow"
+# Accept an image filename with or without its extension.
+image_argument = sys.argv[1] if len(sys.argv) > 1 else "testshadow"
+filename, extension = os.path.splitext(os.path.basename(image_argument))
+supported_extensions = (".png", ".jpg", ".jpeg")
+if extension and extension.lower() not in supported_extensions:
+    raise ValueError(f"Unsupported image extension: {extension}")
+extensions = (extension,) if extension else supported_extensions
+image_path = next(
+    (os.path.join("images", filename + ext) for ext in extensions
+     if os.path.isfile(os.path.join("images", filename + ext))),
+    None,
+)
+if image_path is None:
+    raise FileNotFoundError(f"No matching image found for {image_argument!r} in 'images'.")
 
-# Read image
-img = cv2.imread(f"images/{filename}.png", cv2.IMREAD_UNCHANGED)
+img = cv2.imread(image_path, cv2.IMREAD_UNCHANGED)
+if img is None:
+    raise ValueError(f"OpenCV could not read image: {image_path}")
 benchmark = cvat.load_image(filename)
 
 # Check the result

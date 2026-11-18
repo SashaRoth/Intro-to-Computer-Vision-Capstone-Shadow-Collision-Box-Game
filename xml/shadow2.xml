@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<annotations>
+  <version>1.1</version>
+  <meta>
+    <job>
+      <id>4725495</id>
+      <size>9</size>
+      <mode>annotation</mode>
+      <overlap>0</overlap>
+      <bugtracker></bugtracker>
+      <created>2026-11-13 01:33:23.944684+00:00</created>
+      <updated>2026-11-18 02:42:48.577625+00:00</updated>
+      <subset>default</subset>
+      <start_frame>0</start_frame>
+      <stop_frame>8</stop_frame>
+      <frame_filter></frame_filter>
+      <segments>
+        <segment>
+          <id>4722274</id>
+          <start>0</start>
+          <stop>8</stop>
+          <url>https://app.cvat.ai/api/jobs/4725495/dataset/export/api/jobs/4725495</url>
+        </segment>
+      </segments>
+      <owner>
+        <username>sasha_roth</username>
+        <email>asr195@pitt.edu</email>
+      </owner>
+      <assignee></assignee>
+      <labels>
+        <label>
+          <name>foreground</name>
+          <color>#ffffff</color>
+          <type>polygon</type>
+          <attributes>
+          </attributes>
+        </label>
+      </labels>
+    </job>
+    <dumped>2026-11-18 02:43:21.825109+00:00</dumped>
+  </meta>
+  <image id="0" name="shadow2.jpg" width="4080" height="3060">
+    <polygon label="foreground" source="manual" occluded="0" points="0.00,2823.31;914.25,2825.56;873.94,2790.64;806.71,2752.94;795.94,2701.87;760.85,2626.47;720.55,2580.78;693.62,2516.16;699.80,2436.30;747.47,2405.84;795.94,2357.37;865.78,2303.52;970.71,2325.06;1021.96,2357.37;1078.42,2362.76;1116.12,2325.06;1207.67,2330.45;1274.90,2395.07;1312.60,2448.93;1374.10,2448.70;1468.50,2438.30;1519.70,2410.80;1556.00,2379.40;1558.30,2229.00;1608.10,２１１０．１７;１５２８．３６,１３４８．３９;１５７１．４５,１２４３．６３;１５７６．８３,１０９５．６２;１５７４．０５,９９０．６９;１６４４．０６,９２３．４６;１８１３．６２,９２３．４６;１９３１．９２,９８８．０８;１９６１．６３,１０７９．４６;１９４２．７０,１３１３．６４;２０２８．８６,１４１８．５７;２０３３．７３,２１５１．６９;２０２７．６５,２２３６．１２;２０７６．２９,２２９９．８７;２０９６．９６,２８２２．９６;２３４９．０４,２８３３．９０;２６３７．２４,２４４８．４１;２６６９．７３,２４２３．２２;２９８３．１３,２８３３．９０;４００８．８０,２８３９．６３;４０₂₆．₆₉,₂₈₂₂．₇₈;₄₀₈₀．₀₀,₂₈₁₈．₃₇;₄₀₈₀．₀₀,₃₀₆₀．₀₀;₀٫₀₀,₃₀₆₀．₀₀" z_order="0">
+    </polygon>
+  </image>
+</annotations>
