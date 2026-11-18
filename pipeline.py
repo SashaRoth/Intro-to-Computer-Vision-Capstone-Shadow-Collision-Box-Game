@@ -14,7 +14,7 @@ import display_results as disp
 import evaluation as eval
 
 # parameters
-sigma = 10.0
+sigma = 8.0
 blur_size = (int(sigma*6+1), int(sigma*6+1))
 structure_element_size = 100
 open_intensity = 70
