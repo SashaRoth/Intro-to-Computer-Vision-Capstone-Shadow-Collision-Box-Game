@@ -59,26 +59,23 @@ img_thresh = (img_gray < threshold).astype(np.uint8) * 255
 # step #3: Find contours, keep only the largest one
 img_cont = ip.keep_largest_contour(img_thresh) #<-- custom function to keep only largest object
 
-# step #4: Remove holes to create 1 continuous region <-- SAGE ADD HERE
-img_filled = ip.hole_removal(img_cont) #<-- custom function to remove holes
-
-# step #5: Trace with polylines
-img_poly = img_filled
+# step #4: Remove holes to create 1 continuous region
+img_final = ip.hole_removal(img_cont) #<-- custom function to remove holes
 
 # Save results to /Results
-mask_out = (img_poly > 0).astype(np.uint8) * 255 # normalize to 255
+mask_out = (img_final > 0).astype(np.uint8) * 255 # normalize to 255
 if mask_out.ndim == 3:
     mask_out = mask_out.max(axis=2)
 mask_path = os.path.join("results", f"{filename}_result.png")
 cv2.imwrite(mask_path, mask_out)
 
 # Display each step of the pipeline
-disp.images([img, img_thresh, img_cont, img_filled, img_poly],
-            ['Original', 'Thresholded', 'Contour', 'Filled', 'Polyline'])
+disp.images([img, img_blur, img_thresh, img_cont, img_final],
+            ['Original', 'Grayscale + Blur', 'Thresholded', 'Contour', 'Filled (Final)'])
 
 if benchmark is not None:
-    mean_dist = eval.mean_edge_distance(img_poly, benchmark)
-    IoU_score = eval.IoU(img_poly, benchmark)
+    mean_dist = eval.mean_edge_distance(img_final, benchmark)
+    IoU_score = eval.IoU(img_final, benchmark)
 
     print(f"Mean edge distance: {mean_dist:.2f}")
     print(f"Intersection over Union: {IoU_score:.2f}")
