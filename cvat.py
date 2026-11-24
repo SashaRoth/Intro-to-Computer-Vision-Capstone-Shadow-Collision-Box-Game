@@ -14,8 +14,10 @@ def load_image(filename):
         print("Benchmark image already exists")
         return cv2.imread(outdir, cv2.IMREAD_UNCHANGED)
     else:
-        print("Benchmark image does not exist, generating...")
         xml_path = os.path.join("xml", f"{filename}.xml")
+        if not os.path.isfile(xml_path):
+            return None
+        print("Benchmark image does not exist, generating...")
         root = ET.parse(xml_path).getroot()
         for image in root.iter("image"):
             name = os.path.splitext(image.get("name"))[0]

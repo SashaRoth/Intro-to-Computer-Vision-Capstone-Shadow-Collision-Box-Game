@@ -5,11 +5,13 @@ import matplotlib.pyplot as plt
 def images(imgs, titles):
 
     num = len(imgs)
+    rows = 2
+    cols = num//rows + (num % rows > 0)
 
-    plt.figure(figsize=(4*num, 4))
+    plt.figure(figsize=(2*num, 6))
 
     for i in range(num):
-        plt.subplot(1, num, i+1)
+        plt.subplot(rows, cols, i+1)
         plt.imshow(imgs[i], cmap='gray')
         plt.axis('off')
         plt.title(titles[i])

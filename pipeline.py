@@ -4,6 +4,7 @@ import sys
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
+import subprocess
 
 
 # custom imports
@@ -16,9 +17,7 @@ import evaluation as eval
 # parameters
 sigma = 8.0
 blur_size = (int(sigma*6+1), int(sigma*6+1))
-structure_element_size = 100
-open_intensity = 70
-close_intensity = 200
+shift = 30
 
 # Accept an image filename with or without its extension.
 image_argument = sys.argv[1] if len(sys.argv) > 1 else "testshadow"
@@ -39,6 +38,8 @@ img = cv2.imread(image_path, cv2.IMREAD_UNCHANGED)
 if img is None:
     raise ValueError(f"OpenCV could not read image: {image_path}")
 benchmark = cvat.load_image(filename)
+if benchmark is None:
+    print("No benchmark image available. Proceeding without benchmark comparison.")
 
 # Check the result
 print(type(img))        # <class 'numpy.ndarray'>
@@ -50,28 +51,38 @@ print(f"Value range: [{img.min()}, {img.max()}]")
 img_blur = cv2.GaussianBlur(img, blur_size, sigma)
 img_gray = cv2.cvtColor(img_blur, cv2.COLOR_BGR2GRAY)
 
-# step #2: Background division <-- SAGE ADD HERE
-...
+# step #2: Global OTSU thresholding
+img_trans = img_gray - shift
+threshold = ip.otsu_threshold(img_trans) #<-- custom function to find OTSU threshold
+img_thresh = (img_gray < threshold).astype(np.uint8) * 255 
 
-# step #3: Global OTSU thresholding
-threshold = ip.otsu_threshold(img_gray) #<-- custom function to find OTSU threshold
-img_thresh = (img_gray < threshold) * 255
-
-# step #4: Find contours, keep only the largest one
+# step #3: Find contours, keep only the largest one
 img_cont = ip.keep_largest_contour(img_thresh) #<-- custom function to keep only largest object
 
-# step #5: Remove holes to create 1 continuous region <-- SAGE ADD HERE
-img_filled = img_cont
+# step #4: Remove holes to create 1 continuous region <-- SAGE ADD HERE
+img_filled = ip.hole_removal(img_cont) #<-- custom function to remove holes
 
-# step #6: Trace with polylines
+# step #5: Trace with polylines
 img_poly = img_filled
 
+# Save results to /Results
+mask_out = (img_poly > 0).astype(np.uint8) * 255 # normalize to 255
+if mask_out.ndim == 3:
+    mask_out = mask_out.max(axis=2)
+mask_path = os.path.join("results", f"{filename}_result.png")
+cv2.imwrite(mask_path, mask_out)
+
 # Display each step of the pipeline
-disp.images([img, img_gray, img_thresh, img_cont, img_filled, img_poly],
-            ['Original', 'Grayscale', 'Thresholded', 'Contour', 'Filled', 'Polyline'])
+disp.images([img, img_thresh, img_cont, img_filled, img_poly],
+            ['Original', 'Thresholded', 'Contour', 'Filled', 'Polyline'])
 
-mean_dist = eval.mean_edge_distance(img_poly, benchmark)
-IoU_score = eval.IoU(img_poly, benchmark)
+if benchmark is not None:
+    mean_dist = eval.mean_edge_distance(img_poly, benchmark)
+    IoU_score = eval.IoU(img_poly, benchmark)
 
-print(f"Mean edge distance: {mean_dist:.2f}")
-print(f"Intersection over Union: {IoU_score:.2f}")
+    print(f"Mean edge distance: {mean_dist:.2f}")
+    print(f"Intersection over Union: {IoU_score:.2f}")
+else:
+    print("No benchmark image available. Skipping evaluation metrics.")
+
+subprocess.run(["python", "platformer.py", image_path, mask_path])

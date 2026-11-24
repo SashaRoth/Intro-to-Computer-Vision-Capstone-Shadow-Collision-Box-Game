@@ -37,17 +37,24 @@ def keep_largest_contour(mask):
 
 def background_div(mask, kernel_size=51):
     """Comment"""
-    background = cv2.GaussianBlur(mask, (kernel_size,kernel_size), 0)
+    background = cv2.GaussianBlur(mask, (kernel_size, kernel_size), 0)
     img_f= mask.astype(np.float32)
     bg_f = background.astype(np.float32) + 1.0
     result = img_f/bg_f
     result = cv2.normalize(result, None, 0, 255, cv2.NORM_MINMAX)
     return result.astype(np.uint8)
 
-def hole_removal(mask, open_size=5, close_size=3):
-    close_kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (close_size, close_size))
-    open_kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (open_size,open_size))
+def background_div2(mask): # <-- implemented by Sasha
+    """Comment"""
+    bg_f= np.mean(mask.astype(np.float32))
+    img_f= mask.astype(np.float32)
+    result = img_f/bg_f
+    result = cv2.normalize(result, None, 0, 255, cv2.NORM_MINMAX) # float
+    return result.astype(np.uint8) # to uint8
 
-    closed = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, close_kernel)
-    cleaned = cv2.morphologyEx(closed, cv2.MORPH_OPEN, open_kernel)
-    return cleaned
+def hole_removal(mask):
+    """Remove holes from a binary mask using contours."""
+    flipped = 255 - mask.astype(np.uint8)  # Invert the mask to get holes as foreground
+    removed = keep_largest_contour(flipped)  # Keep only the largest hole (the background)
+    cleaned = 255 - removed.astype(np.uint8)  # Invert back to original mask
+    return cleaned.astype(np.bool)
