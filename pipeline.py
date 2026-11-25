@@ -82,4 +82,4 @@ if benchmark is not None:
 else:
     print("No benchmark image available. Skipping evaluation metrics.")
 
-subprocess.run(["python", "platformer.py", image_path, mask_path])
+subprocess.run([sys.executable, "platformer.py", image_path, mask_path])
